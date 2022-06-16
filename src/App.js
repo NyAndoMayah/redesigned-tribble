@@ -7,8 +7,17 @@ import { Footer } from "./components/Footer";
 import { Card } from "./components/Card";
 import { faker } from "@faker-js/faker";
 import { useState } from "react";
+import {useEffect} from "react";
+import axios from "axios";
 
 function App() {
+  let [user, setUser] = useState([]);
+  
+  useEffect(() => {
+    axios.get("https://jsonplaceholder.typicode.com/posts");
+    const {data} = result;
+    setUser(data);
+  }) 
   const employees = new Array(15).fill(null).map((_) => ({
     name: faker.name.findName(),
     position: faker.company.bsNoun(),
@@ -16,7 +25,7 @@ function App() {
     age: faker.random.numeric(2),
     startDate: new Date().toISOString().split("T")[0],
     salary: faker.random.numeric(6),
-  }));
+  }),[]);
 
   const [sidebarClass, setSidebarClass] = useState("sb-nav-fixed");
 
